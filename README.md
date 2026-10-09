@@ -38,12 +38,13 @@ npm ci
 export DATABASE_URL='postgresql://app:password@localhost:5432/app'
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/migrations/0001_init.sql
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/migrations/0002_approval.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/migrations/0003_labels.sql
 npm run dev
 ```
 
 `http://localhost:3000` を開きます。接続が未設定・準備中・利用不可の場合は、その理由と次の操作を表示し、保存を始めません。秘密の接続情報は画面に出しません。
 
-AppThrustでは接続から`DATABASE_URL`が渡され、`db/migrations/*.sql` は基盤の **DatabaseChange** が適用します。**アプリ起動時にマイグレーションは実行しません。** SQLは再適用でき、初期種別の重複を作りません。`0001_init.sql` は元ひな形の履歴として保持していますが、旧メッセージ機能は使いません。
+AppThrustでは接続から`DATABASE_URL`が渡され、`db/migrations/*.sql` は基盤の **DatabaseChange** が適用します。**アプリ起動時にマイグレーションは実行しません。** SQLは再適用でき、初期種別の重複を作りません。`0001_init.sql` は元ひな形の履歴として保持していますが、旧メッセージ機能は使いません。`0002_approval.sql` は申請・承認の表と初期種別を作成し、`0003_labels.sql` はコンソールのデータタブで使う日本語の表名・列名を設定します。
 
 ## データモデル
 
